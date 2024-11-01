@@ -60,8 +60,8 @@ Após ter copiado a chave:
 
 
 # Autores do projeto:
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/144955008?s=400&u=405ac4d5c5d3e40c2c8603b1e07b06e39a743376&v=4" width=115><br><sub>Talita de Brito Nalon</sub>](https://github.com/TalitaNalon)
-| :---: | :---: |
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/144955008?s=400&u=405ac4d5c5d3e40c2c8603b1e07b06e39a743376&v=4" width=115><br><sub>Talita de Brito Nalon</sub>](https://github.com/TalitaNalon) |
+| :---: |
 
 # Conclusão
 
