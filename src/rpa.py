@@ -74,6 +74,28 @@ def update_plano(conn_1, conn_2):
     print("Atualização da tabela Plano concluída.")
 
 
+def fetch_tag_servico(cur):
+    cur.execute("""SELECT ID, nome FROM tag_servico""")
+    return cur.fetchall()
+
+def insert_tag_servico(cur, nome):
+    cur.execute("""INSERT INTO TagServico (nome) VALUES (%s)""", (nome,))  
+
+def update_tag_servico(conn_1, conn_2):
+    cur_1 = conn_1.cursor()
+    cur_2 = conn_2.cursor()
+
+    tag_servicos = fetch_tag_servico(cur_1)
+    
+    for tag_servico_id, nome in tag_servicos:
+        cur_2.execute("""SELECT * FROM TagServico WHERE tag_servico_id = %s""", (tag_servico_id,)) 
+        if cur_2.fetchone() is None:
+            insert_tag_servico(cur_2, nome)
+
+    conn_2.commit()
+    print("Atualização da tabela TagServico concluída.")
+
+
 def main():
     start_time = time.time()   
     
