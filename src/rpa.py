@@ -96,6 +96,43 @@ def update_tag_servico(conn_1, conn_2):
     print("Atualização da tabela TagServico concluída.")
 
 
+def fetch_pagamento_plano(cur):
+    cur.execute("""SELECT usuario_id, plano_id FROM Pagamento_Plano""")
+    return cur.fetchall()
+
+def insert_plano_ativacao(cur, usuario_id, plano_id):
+    cur.execute("""SELECT * FROM Plano_Ativacao WHERE ID_usuario_ativacao = %s AND ID_plano = %s""", (usuario_id, plano_id))
+    if cur.fetchone() is None:
+        cur.execute("""INSERT INTO Plano_Ativacao (ID_usuario_ativacao, ID_plano) VALUES (%s, %s)""", (usuario_id, plano_id))  
+
+def insert_plano_usuario(cur, usuario_id, plano_id, data_assinatura, data_final):
+    cur.execute("""SELECT * FROM Plano_Usuario WHERE usuario_id = %s AND plano_id = %s""", (usuario_id, plano_id))
+    if cur.fetchone() is None:
+        cur.execute("""INSERT INTO Plano_Usuario (usuario_id, plano_id, data_assinatura, data_final) VALUES (%s, %s, %s, %s)""", (usuario_id, plano_id, data_assinatura, data_final))
+
+def update_plano_usuario(conn_1, conn_2):
+    cur_1 = conn_1.cursor()
+    cur_2 = conn_2.cursor()
+
+    pagamentos = fetch_pagamento_plano(cur_2)
+    
+    for usuario_id, plano_id in pagamentos:
+        insert_plano_ativacao(cur_1, usuario_id, plano_id)
+
+    conn_1.commit()
+    print("Dados inseridos na tabela Plano_Ativacao.")
+
+    cur_1.execute("""SELECT ID_usuario_ativacao, ID_plano, data_assinatura, data_final, ativacao FROM Plano_Ativacao""")
+    planos_ativacao = cur_1.fetchall()
+
+    for usuario_id_ativacao, plano_id, data_assinatura, data_final, ativacao in planos_ativacao:
+        if ativacao == 'A':
+            insert_plano_usuario(cur_2, usuario_id_ativacao, plano_id, data_assinatura, data_final)
+
+    conn_2.commit()
+    print("Atualização da tabela Plano_Usuario concluída.")
+
+
 def main():
     start_time = time.time()   
     
@@ -127,8 +164,9 @@ def main():
     time.sleep(5) 
     update_plano(conn_1, conn_2)
     time.sleep(5) 
+    update_plano_usuario(conn_1, conn_2)
+    time.sleep(5)
     
-
     desconectar_banco(cur_1, cur_2, conn_1, conn_2)
     
     end_time = time.time() 
