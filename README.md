@@ -15,7 +15,6 @@ O projeto está em desenvolvimento e sujeito a mudanças.
 
 
 
-
 # Análise de Dados
 * [Funcionalidades do projeto](#hammer-funcionalidades-do-projeto)
 * [Acesso ao projeto](#file_folder-acesso-ao-projeto)
