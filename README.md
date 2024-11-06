@@ -51,11 +51,11 @@ Após ter copiado a chave:
 
 
 # :hammer_and_wrench: Tecnologias Utilizadas
-* Python
-* psycopg2
-* PostgreSQ
-* SQL
-* Time
+* Python🐍
+* psycopg2🤖
+* PostgreSQ🪑
+* SQL🧾
+* Time⏳
 
 
 # Autores do projeto:
